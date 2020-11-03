@@ -1,8 +1,5 @@
 package com.example.interest.interest.service;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.Executors;
@@ -10,18 +7,22 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
-import org.apache.logging.log4j.util.StringBuilders;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import com.example.interest.interest.entity.InterestEntity;
 import com.example.interest.interest.repository.InterestRepo;
 
+
+
+
 @Service
 public class InterestServiceImpl implements InterestService {
+
+	
+
+	
 	
 	LocalDateTime startDate;
 	
@@ -35,11 +36,26 @@ public class InterestServiceImpl implements InterestService {
 	
 	static ScheduledFuture<?> future;
 	
+	
+//	public boolean isenabled() {
+//		
+//		if(with == true) {
+//			
+//			with == false;
+//		}
+//		return with;
+//		
+//	}
+//	
+	@Autowired
 	public InterestServiceImpl(InterestRepo theInterestRepo) {
 		
 		interestRepo=theInterestRepo;
 		
 	}
+	
+//	@Autowired
+//	RestTemplate restTemplate;
 
 	@Override
 	public List<InterestEntity> findAll() {
@@ -54,59 +70,58 @@ public class InterestServiceImpl implements InterestService {
 	public InterestEntity save(InterestEntity user) throws InterruptedException{
 
 		
-		
+//		InterestEntity user=restTemplate.getForObject(url, responseType)
 		
 		double bal=user.getBalance();
 		double p=user.getAmount();
-		
-		boolean with=user.
-		
+		boolean with = false;
+
+
 		int t=user.getTenure();
-		
 		int days=t*30;
-		int n=365;
+		int n=12;
 		double r=0.03/365;
 		
 		user.setDate(LocalDateTime.now());
 		
 		startDate=user.getDate();
 		
-		enddate=startDate.plusDays(days);
+		enddate=startDate.plusSeconds(10);
 		
 		date1=startDate.plusDays(30);
 		
 		date2=startDate.plusDays(60);
 		
 		
-		LocalDateTime d = startDate;
+		
+		
 		
 		 ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
 	        future = executor.scheduleAtFixedRate(new Runnable(){
+	        	LocalDateTime d = startDate;
 	        	double curr_bal=bal-p;
+	        	
+	        	
 	                @Override
 	                public void run() {
+	                	
 	                	if (d.isBefore(enddate) || d.equals(enddate) ) {
 	            			
-	                			double amount=p * Math.pow(1 + (r / n), n * t);
+	                			double amount=p * Math.pow(1 + (r / n), n * 1);
 	                			
-	            				curr_bal=curr_bal+(amount-p);	
+//	            				curr_bal=curr_bal+(amount-p);	
 	            				
 	            				user.setBalance(curr_bal);
 	            				
+	            				System.out.println(curr_bal);
+	            				
 	            				interestRepo.save(user);
+	            				
+	            				d=d.plusSeconds(1);
 	                }
 	                	
 	                	
-	                	else if(with == true) {
-	                		
-	                		curr_bal=curr_bal+p;
-	                		
-	                		user.setBalance(curr_bal);
-	                		
-	                		future.cancel(true);
-	                		executor.shutdown();
-	                		
-	                	}
+	                	
 	                	
 	                	
 	                	else {
@@ -120,17 +135,18 @@ public class InterestServiceImpl implements InterestService {
 	                	}
 	        		
 	}
+	                	
+	                	
+	                         
 	                
 	                
 	                
 	                
 	                
-	                
-},0, 1, TimeUnit.SECONDS);
+	        },0, 1, TimeUnit.SECONDS);
 		
 
-	return interestRepo.save(user);
-
+	        return user;
 
 	}
 

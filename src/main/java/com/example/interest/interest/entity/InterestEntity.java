@@ -33,7 +33,7 @@ public class InterestEntity {
 	LocalDateTime date;
 	
 	@Column(name="amount")
-	private int amount;
+	private double amount;
 	
 	@Column(name="tenure")
 	private int tenure;
@@ -108,11 +108,11 @@ public class InterestEntity {
 		this.date = date;
 	}
 
-	public int getAmount() {
+	public double getAmount() {
 		return amount;
 	}
 
-	public void setAmount(int amount) {
+	public void setAmount(double amount) {
 		this.amount = amount;
 		
 	}
