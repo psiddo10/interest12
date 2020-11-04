@@ -73,9 +73,8 @@ public class InterestServiceImpl implements InterestService {
 //		InterestEntity user=restTemplate.getForObject(url, responseType)
 		
 		double bal=user.getBalance();
-		double p=user.getAmount();
+		double p=user.getAmount();;
 		boolean with = false;
-
 
 		int t=user.getTenure();
 		int days=t*30;
@@ -98,22 +97,23 @@ public class InterestServiceImpl implements InterestService {
 		
 		 ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
 	        future = executor.scheduleAtFixedRate(new Runnable(){
-	        	LocalDateTime d = startDate;
-	        	double curr_bal=bal-p;
 	        	
+	        	LocalDateTime d = startDate;
+	        	double princ=p;
+
+	        	double curr_bal=bal-princ;
 	        	
 	                @Override
 	                public void run() {
 	                	
 	                	if (d.isBefore(enddate) || d.equals(enddate) ) {
 	            			
-	                			double amount=p * Math.pow(1 + (r / n), n * 1);
+	                			 princ=princ* Math.pow(1 + (r / n), n * 1);
 	                			
-//	            				curr_bal=curr_bal+(amount-p);	
+	                			
+	                			user.setAmount(princ);
 	            				
-	            				user.setBalance(curr_bal);
-	            				
-	            				System.out.println(curr_bal);
+	            				System.out.println(princ);
 	            				
 	            				interestRepo.save(user);
 	            				
@@ -122,14 +122,12 @@ public class InterestServiceImpl implements InterestService {
 	                	
 	                	
 	                	
-	                	
-	                	
 	                	else {
 	                		
-	                		curr_bal=curr_bal+p;
+	                		curr_bal=curr_bal+princ;
 	                		
 	                		user.setBalance(curr_bal);
-	                		
+	                		System.out.println(curr_bal);
 	                		future.cancel(true);
 	                		executor.shutdown();
 	                	}
