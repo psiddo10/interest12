@@ -22,8 +22,12 @@ public class InterestController {
 
 	private InterestService interestService;
 	
-//	@Autowired
-//	private RestTemplate restTemplate;
+	@Autowired
+	private RestTemplate restTemplate;
+	
+	
+	
+	
 	
 	@Autowired
 	public InterestController(InterestService theInterestService) {

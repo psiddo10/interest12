@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import com.example.interest.interest.entity.InterestEntity;
+import com.example.interest.interest.entity.RestEntity;
 import com.example.interest.interest.repository.InterestRepo;
 
 
@@ -54,8 +55,10 @@ public class InterestServiceImpl implements InterestService {
 		
 	}
 	
-//	@Autowired
-//	RestTemplate restTemplate;
+	@Autowired
+	RestTemplate restTemplate;
+	
+	RestEntity userIn= restTemplate.getForObject("http://pocketbits.onerooftechnologies.com/api/v1/User/UserDetailsByMobileNo?token=0B3B4681-4AB2-42F3-A730-55B2512AE31F-87801&device_type=3&Mobile_no=8087562646", RestEntity.class);
 
 	@Override
 	public List<InterestEntity> findAll() {
@@ -73,13 +76,16 @@ public class InterestServiceImpl implements InterestService {
 //		InterestEntity user=restTemplate.getForObject(url, responseType)
 		
 		double bal=user.getBalance();
-		double p=user.getAmount();;
+		double p=user.getAmount();
 		boolean with = false;
+		boolean request_for_withdrawl=false;
 
 		int t=user.getTenure();
 		int days=t*30;
 		int n=12;
 		double r=0.03/365;
+		
+		
 		
 		user.setDate(LocalDateTime.now());
 		
@@ -120,6 +126,17 @@ public class InterestServiceImpl implements InterestService {
 	            				d=d.plusSeconds(1);
 	                }
 	                	
+	                	else if(with == true) {
+	                		
+	                		
+	                		
+	                		if(request_for_withdrawl == true){
+	                		curr_bal=curr_bal+princ;
+	                		user.setBalance(curr_bal);
+	                		future.cancel(true);
+	                		executor.shutdown();
+	                		}
+	                	}
 	                	
 	                	
 	                	else {
@@ -131,6 +148,7 @@ public class InterestServiceImpl implements InterestService {
 	                		future.cancel(true);
 	                		executor.shutdown();
 	                	}
+	                	
 	        		
 	}
 	                	
