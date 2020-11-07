@@ -55,10 +55,10 @@ public class InterestServiceImpl implements InterestService {
 		
 	}
 	
-	@Autowired
-	RestTemplate restTemplate;
-	
-	RestEntity userIn= restTemplate.getForObject("http://pocketbits.onerooftechnologies.com/api/v1/User/UserDetailsByMobileNo?token=0B3B4681-4AB2-42F3-A730-55B2512AE31F-87801&device_type=3&Mobile_no=8087562646", RestEntity.class);
+//	@Autowired
+//	RestTemplate restTemplate;
+//	
+//	RestEntity userIn= restTemplate.getForObject("http://pocketbits.onerooftechnologies.com/api/v1/User/UserDetailsByMobileNo?token=0B3B4681-4AB2-42F3-A730-55B2512AE31F-87801&device_type=3&Mobile_no=8087562646", RestEntity.class);
 
 	@Override
 	public List<InterestEntity> findAll() {
@@ -77,9 +77,11 @@ public class InterestServiceImpl implements InterestService {
 		
 		double bal=user.getBalance();
 		double p=user.getAmount();
-		boolean with = false;
-		boolean request_for_withdrawl=false;
+		
 
+		boolean isApproved=false;
+		boolean request_for_withdrawl=false;
+		boolean with=false;
 		int t=user.getTenure();
 		int days=t*30;
 		int n=12;
@@ -97,10 +99,10 @@ public class InterestServiceImpl implements InterestService {
 		
 		date2=startDate.plusDays(60);
 		
-		
-		
-		
-		
+		if(user.isWithdraw() == false) {
+			interestRepo.save(user);
+		}
+		else {
 		 ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
 	        future = executor.scheduleAtFixedRate(new Runnable(){
 	        	
@@ -111,7 +113,6 @@ public class InterestServiceImpl implements InterestService {
 	        	
 	                @Override
 	                public void run() {
-	                	
 	                	if (d.isBefore(enddate) || d.equals(enddate) ) {
 	            			
 	                			 princ=princ* Math.pow(1 + (r / n), n * 1);
@@ -156,21 +157,20 @@ public class InterestServiceImpl implements InterestService {
 	                         
 	                
 	                
-	                
+	                          
 	                
 	                
 	        },0, 1, TimeUnit.SECONDS);
 		
-
+		}
 	        return user;
 
 	}
-
+	
 	@Override
 	public Optional<InterestEntity> findById(Integer theid) {
 		
 		Optional<InterestEntity> interest=interestRepo.findById(theid);
-		
 		
 		
 		
@@ -184,7 +184,23 @@ public class InterestServiceImpl implements InterestService {
 
 	}
 
+	
+	@Override
+	public boolean findApproval(boolean flag) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 
+	@Override
+	public InterestEntity disp(InterestEntity user) {
+		return interestRepo.save(user);
+	}
+
+	
+	
+
+
+	
 	
 	
 

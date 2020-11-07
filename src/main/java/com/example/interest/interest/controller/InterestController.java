@@ -22,10 +22,10 @@ public class InterestController {
 
 	private InterestService interestService;
 	
-	@Autowired
-	private RestTemplate restTemplate;
-	
-	
+//	@Autowired
+//	private RestTemplate restTemplate;
+//	
+//	
 	
 	
 	
@@ -45,13 +45,27 @@ public class InterestController {
 	
 	
 	@PostMapping("/findall")
-	public InterestEntity findall(@RequestBody InterestEntity user ) throws InterruptedException {
+	public InterestEntity findall(@RequestBody InterestEntity user) throws InterruptedException {
+		
 		
 		return interestService.save(user);
 		
 		
 		
 	}
+	
+	@PostMapping("/findalldisp")
+	public InterestEntity findalldisp(@RequestBody InterestEntity user) throws InterruptedException {
+		
+		
+		return interestService.disp(user);
+		
+		
+		
+	}
+	
+	
+	
 	
 	
 	@GetMapping("/findall/{theid}")
@@ -67,7 +81,13 @@ public class InterestController {
 	public InterestEntity update(@RequestBody InterestEntity user) throws InterruptedException {
 		
 		
+		
 		return interestService.save(user);
 		
 	}
+	
+	
+
+	
+	
 }

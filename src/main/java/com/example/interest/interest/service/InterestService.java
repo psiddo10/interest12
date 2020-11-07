@@ -16,6 +16,13 @@ public interface InterestService {
 
 	Optional<InterestEntity> findById(Integer theid);
 	
+
+	
 	public InterestEntity deleteById(Integer theid);
+
+	public boolean findApproval(boolean flag);
+	
+	public InterestEntity disp(InterestEntity user);
+
 	
 }

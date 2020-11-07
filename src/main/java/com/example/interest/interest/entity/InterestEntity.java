@@ -42,9 +42,9 @@ public class InterestEntity {
 	private double balance;
 	
 //	
-//	@Column(name="Withdraw")
-//	private boolean withdraw;
-//	
+	@Column(name="approval")
+	private boolean withdraw;
+	
 
 	public InterestEntity() {}
 
@@ -66,15 +66,15 @@ public class InterestEntity {
 		this.amount = amount;
 		this.tenure = tenure;
 		this.balance = balance;
-		//this.withdraw = withdraw;
+		this.withdraw = withdraw;
 	}
-//	public boolean isWithdraw() {
-//		return withdraw;
-//	}
-//
-//	public boolean setWithdraw(boolean withdraw) {
-//		return this.withdraw = withdraw;
-//	}
+	public boolean isWithdraw() {
+		return withdraw;
+	}
+
+	public boolean setWithdraw(boolean withdraw) {
+		return this.withdraw = withdraw;
+	}
 
 	public double getBalance() {
 		return balance;
