@@ -78,15 +78,10 @@ public class InterestServiceImpl implements InterestService {
 		double bal=user.getBalance();
 		double p=user.getAmount();
 		
-
-		boolean isApproved=false;
-		boolean request_for_withdrawl=false;
-		boolean with=false;
 		int t=user.getTenure();
 		int days=t*30;
 		int n=12;
 		double r=0.03/365;
-		
 		
 		
 		user.setDate(LocalDateTime.now());
@@ -99,22 +94,29 @@ public class InterestServiceImpl implements InterestService {
 		
 		date2=startDate.plusDays(60);
 		
-		if(user.isWithdraw() == false) {
+		if(user.isApproval() == false) {
 			interestRepo.save(user);
 		}
 		else {
+			
+			
 		 ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
 	        future = executor.scheduleAtFixedRate(new Runnable(){
+	        	
+	    		
+
 	        	
 	        	LocalDateTime d = startDate;
 	        	double princ=p;
 
 	        	double curr_bal=bal-princ;
 	        	
+	        	
 	                @Override
 	                public void run() {
-	                	if (d.isBefore(enddate) || d.equals(enddate) ) {
-	            			
+	                	if ( d.isBefore(enddate) && user.isWithdraw()== false ) {
+
+	                		
 	                			 princ=princ* Math.pow(1 + (r / n), n * 1);
 	                			
 	                			
@@ -122,33 +124,26 @@ public class InterestServiceImpl implements InterestService {
 	            				
 	            				System.out.println(princ);
 	            				
+	            				
 	            				interestRepo.save(user);
 	            				
 	            				d=d.plusSeconds(1);
+	                	
+	                		
 	                }
 	                	
-	                	else if(with == true) {
-	                		
-	                		
-	                		
-	                		if(request_for_withdrawl == true){
-	                		curr_bal=curr_bal+princ;
-	                		user.setBalance(curr_bal);
-	                		future.cancel(true);
-	                		executor.shutdown();
-	                		}
-	                	}
+	                	
+	                	
+	                	
+	                	
 	                	
 	                	
 	                	else {
 	                		
-	                		curr_bal=curr_bal+princ;
-	                		
-	                		user.setBalance(curr_bal);
-	                		System.out.println(curr_bal);
 	                		future.cancel(true);
 	                		executor.shutdown();
 	                	}
+	                	
 	                	
 	        		
 	}
@@ -156,11 +151,11 @@ public class InterestServiceImpl implements InterestService {
 	                	
 	                         
 	                
-	                
+	                       
 	                          
 	                
 	                
-	        },0, 1, TimeUnit.SECONDS);
+	        },0, 2, TimeUnit.SECONDS);
 		
 		}
 	        return user;
@@ -191,10 +186,7 @@ public class InterestServiceImpl implements InterestService {
 		return false;
 	}
 
-	@Override
-	public InterestEntity disp(InterestEntity user) {
-		return interestRepo.save(user);
-	}
+	
 
 	
 	

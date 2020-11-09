@@ -54,15 +54,7 @@ public class InterestController {
 		
 	}
 	
-	@PostMapping("/findalldisp")
-	public InterestEntity findalldisp(@RequestBody InterestEntity user) throws InterruptedException {
-		
-		
-		return interestService.disp(user);
-		
-		
-		
-	}
+	
 	
 	
 	

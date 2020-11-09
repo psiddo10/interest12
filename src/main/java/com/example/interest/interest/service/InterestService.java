@@ -22,7 +22,6 @@ public interface InterestService {
 
 	public boolean findApproval(boolean flag);
 	
-	public InterestEntity disp(InterestEntity user);
 
 	
 }

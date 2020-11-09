@@ -1,6 +1,7 @@
 package com.example.interest.interest.entity;
 
 import java.time.LocalDateTime;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -43,7 +44,10 @@ public class InterestEntity {
 	
 //	
 	@Column(name="approval")
-	private boolean withdraw;
+	private boolean approval;
+	
+	@Column(name="withdraw")
+	private volatile boolean withdraw;
 	
 
 	public InterestEntity() {}
@@ -57,8 +61,11 @@ public class InterestEntity {
 
 	
 
-	public InterestEntity(int id, String username, LocalDateTime date, int amount, int tenure, int balance,
-			boolean withdraw) {
+	
+	
+
+	public InterestEntity(int id, String username, LocalDateTime date, double amount, int tenure, double balance,
+			boolean approval, boolean withdraw) {
 		super();
 		Id = id;
 		this.username = username;
@@ -66,14 +73,27 @@ public class InterestEntity {
 		this.amount = amount;
 		this.tenure = tenure;
 		this.balance = balance;
+		this.approval = approval;
 		this.withdraw = withdraw;
 	}
+	
+	
+	
+
 	public boolean isWithdraw() {
 		return withdraw;
 	}
 
-	public boolean setWithdraw(boolean withdraw) {
-		return this.withdraw = withdraw;
+	public void setWithdraw(boolean withdraw) {
+		this.withdraw = withdraw;
+	}
+
+	 public boolean isApproval() {
+		return approval;
+	}
+
+	public void setApproval(boolean approval) {
+		this.approval = approval;
 	}
 
 	public double getBalance() {
