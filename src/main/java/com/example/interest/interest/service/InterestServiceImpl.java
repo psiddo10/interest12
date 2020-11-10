@@ -83,7 +83,6 @@ public class InterestServiceImpl implements InterestService {
 		int n=12;
 		double r=0.03/365;
 		
-		
 		user.setDate(LocalDateTime.now());
 		
 		startDate=user.getDate();
@@ -104,20 +103,26 @@ public class InterestServiceImpl implements InterestService {
 	        future = executor.scheduleAtFixedRate(new Runnable(){
 	        	
 	    		
-
+	        	
 	        	
 	        	LocalDateTime d = startDate;
+	        	LocalDateTime d2=enddate;
 	        	double princ=p;
 
-	        	double curr_bal=bal-princ;
 	        	
 	        	
-	                @Override
+	        	
+	        	    @Override
 	                public void run() {
-	                	if ( d.isBefore(enddate) && user.isWithdraw()== false ) {
+	                	
+	                	
+	                	
+	                	
+	                	if ( d.isBefore(d2) ) {
 
 	                		
-	                			 princ=princ* Math.pow(1 + (r / n), n * 1);
+	                			princ=princ* Math.pow(1 + (r / n), n * 1);
+	                			
 	                			
 	                			
 	                			user.setAmount(princ);
@@ -128,34 +133,34 @@ public class InterestServiceImpl implements InterestService {
 	            				interestRepo.save(user);
 	            				
 	            				d=d.plusSeconds(1);
-	                	
+	            				
+	            				
 	                		
 	                }
 	                	
-	                	
-	                	
-	                	
-	                	
+	                	else if(user.getInittenure()==3){
+	                		
+	                		d2=LocalDateTime.now();
+	                		
+	                	}
 	                	
 	                	
 	                	else {
-	                		
+
 	                		future.cancel(true);
 	                		executor.shutdown();
 	                	}
 	                	
 	                	
-	        		
-	}
 	                	
-	                	
-	                         
-	                
-	                       
-	                          
-	                
+					}
+	              
+	               	
+	          
 	                
 	        },0, 2, TimeUnit.SECONDS);
+	        
+	        
 		
 		}
 	        return user;
@@ -173,18 +178,24 @@ public class InterestServiceImpl implements InterestService {
 	
 	}
 
-	@Override
-	public InterestEntity deleteById(Integer theid) {
-		return null;
-
-	}
+//	@Override
+//	public InterestEntity deleteById(Integer theid) {
+//		return null;
+//
+//	}
 
 	
 	@Override
 	public boolean findApproval(boolean flag) {
-		// TODO Auto-generated method stub
-		return false;
+		return flag;
 	}
+
+@Override
+public InterestEntity deleteById(Integer theid) {
+	// TODO Auto-generated method stub
+	return null;
+}
+
 
 	
 

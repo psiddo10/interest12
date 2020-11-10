@@ -39,6 +39,10 @@ public class InterestEntity {
 	@Column(name="tenure")
 	private int tenure;
 	
+	@Column(name="initTenure")
+	private int inittenure;
+	
+	
 	@Column(name="balance")
 	private double balance;
 	
@@ -49,43 +53,32 @@ public class InterestEntity {
 	@Column(name="withdraw")
 	private volatile boolean withdraw;
 	
+	
+	
 
 	public InterestEntity() {}
 
-	
-
-	
-
-
-	
-
-	
-
-	
-	
-
-	public InterestEntity(int id, String username, LocalDateTime date, double amount, int tenure, double balance,
-			boolean approval, boolean withdraw) {
+	public InterestEntity(int id, String username, LocalDateTime date, double amount, int tenure, int inittenure,
+			double balance, boolean approval, boolean withdraw) {
 		super();
 		Id = id;
 		this.username = username;
 		this.date = date;
 		this.amount = amount;
 		this.tenure = tenure;
+		this.inittenure = inittenure;
 		this.balance = balance;
 		this.approval = approval;
 		this.withdraw = withdraw;
 	}
-	
-	
-	
 
 	public boolean isWithdraw() {
 		return withdraw;
 	}
 
-	public void setWithdraw(boolean withdraw) {
-		this.withdraw = withdraw;
+	public boolean setWithdraw(boolean withdraw) {
+		return this.withdraw = withdraw;
+		
 	}
 
 	 public boolean isApproval() {
@@ -136,11 +129,27 @@ public class InterestEntity {
 		this.amount = amount;
 		
 	}
+	
+	
+
+
+	
+	public int getInittenure() {
+		return inittenure;
+	}
+
+	public void setInittenure(int inittenure) {
+		this.inittenure = inittenure;
+	}
 
 	@Override
 	public String toString() {
-		return "InterestEntity [username=" + username + ", date=" + date + ", amount=" + amount + "]";
+		return "InterestEntity [Id=" + Id + ", username=" + username + ", date=" + date + ", amount=" + amount
+				+ ", tenure=" + tenure + ", inittenure=" + inittenure + ", balance=" + balance + ", approval="
+				+ approval + ", withdraw=" + withdraw + "]";
 	}
+
+	
 	
 	
 

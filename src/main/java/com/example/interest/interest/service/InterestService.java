@@ -21,6 +21,7 @@ public interface InterestService {
 	public InterestEntity deleteById(Integer theid);
 
 	public boolean findApproval(boolean flag);
+
 	
 
 	
