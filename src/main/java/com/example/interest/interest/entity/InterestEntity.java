@@ -32,9 +32,9 @@ public class InterestEntity {
 	@Column(name="date")
 	LocalDateTime date;
 	
-	@Column(name="enddate")
-	LocalDateTime enddate;
-	
+//	@Column(name="enddate")
+//	LocalDateTime enddate;
+//	
 	@Column(name="amount")
 	private double amount;
 	
@@ -52,9 +52,9 @@ public class InterestEntity {
 	@Column(name="withdraw")
 	public boolean withdraw;
 	
-	@Column(name="randomdate")
-	LocalDateTime randomdate;
-	
+//	@Column(name="randomdate")
+//	LocalDateTime randomdate;
+//	
 
 	public InterestEntity() {}
 
@@ -76,13 +76,13 @@ public class InterestEntity {
 		Id = id;
 		this.username = username;
 		this.date = date;
-		this.enddate = enddate;
+//		this.enddate = enddate;
 		this.amount = amount;
 		this.tenure = tenure;
 		this.balance = balance;
 		this.approval = approval;
 		this.withdraw = withdraw;
-		this.randomdate = randomdate;
+//		this.randomdate = randomdate;
 	}
 
 	public boolean isApproval() {
@@ -143,22 +143,22 @@ public class InterestEntity {
 	}
 	
 
-	public LocalDateTime getEnddate() {
-		return enddate;
-	}
-
-	public void setEnddate(LocalDateTime enddate) {
-		this.enddate = enddate;
-	}
-	
-
-	public LocalDateTime getRandomdate() {
-		return randomdate;
-	}
-
-	public void setRandomdate(LocalDateTime randomdate) {
-		this.randomdate = randomdate;
-	}
+//	public LocalDateTime getEnddate() {
+//		return enddate;
+//	}
+//
+//	public void setEnddate(LocalDateTime enddate) {
+//		this.enddate = enddate;
+//	}
+//	
+//
+//	public LocalDateTime getRandomdate() {
+//		return randomdate;
+//	}
+//
+//	public void setRandomdate(LocalDateTime randomdate) {
+//		this.randomdate = randomdate;
+//	}
 
 	@Override
 	public String toString() {

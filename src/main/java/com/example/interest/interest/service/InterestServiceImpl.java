@@ -94,7 +94,7 @@ public class InterestServiceImpl implements InterestService {
 		startDate=user.getDate();
 		
 		enddate=startDate.plusSeconds(120);
-		user.setEnddate(enddate);
+//		user.setEnddate(enddate);
 		
 		
 		
@@ -110,18 +110,18 @@ public class InterestServiceImpl implements InterestService {
 	        	LocalDateTime d2= enddate;
 	        	double curr_bal=bal-princ;
 	        	
-	        	LocalDateTime d3=user.getRandomdate();
-	        	
-	        	LocalDateTime d4=user.getEnddate();
+//	        	LocalDateTime d3=user.getRandomdate();
+//	        	
+//	        	LocalDateTime d4=user.getEnddate();
 
 	                @Override
 	                public void run() {
 	                	
 	            		
 
-	                	System.out.println(d.isBefore(user.getEnddate()) + ""+ !user.isWithdraw()  );
+	                	System.out.println(d.isBefore(d2) + ""+ user.isWithdraw()  );
 	                	
-	                	if (d.isBefore(user.getEnddate()) && user.isWithdraw()  ) {
+	                	if (d.isBefore(d2) && user.isWithdraw()  ) {
 	            			
 	                			 princ=princ* Math.pow(1 + (r / n), n * 1);
 	                			
@@ -146,7 +146,9 @@ public class InterestServiceImpl implements InterestService {
 	                		user.setBalance(curr_bal);
 	                		System.out.println(curr_bal);
 	                		future.cancel(true);
-	                		executor.shutdown();
+	                		executor.shutdown();;
+	                		
+	                		
 	                	}
 	                	
 	                	
@@ -159,10 +161,10 @@ public class InterestServiceImpl implements InterestService {
 	                         
 	                
 	                
-	                          
+	                         
 	                
 	                
-	        },0, 4, TimeUnit.HOURS);
+	        },0, 4, TimeUnit.SECONDS);
 		
 		}
 	        return user;

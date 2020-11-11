@@ -78,15 +78,15 @@ public class InterestController {
 	
 	
 	
-	@PutMapping("/findalldate")
-	public InterestEntity update(@RequestBody InterestEntity user) throws InterruptedException {
-		
-		LocalDateTime date=LocalDateTime.now();
-		
-		user.setEnddate(date);
-		return user;
-		
-	}
+//	@PutMapping("/findalldate")
+//	public InterestEntity update(@RequestBody InterestEntity user) throws InterruptedException {
+//		
+//		LocalDateTime date=LocalDateTime.now();
+//		
+//		user.setEnddate(date);
+//		return user;
+//		
+//	}
 	
 	
 
