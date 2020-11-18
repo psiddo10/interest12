@@ -138,7 +138,7 @@ public class InterestServiceImpl implements InterestService {
 	                		
 	                }
 	                	
-	                	else if(user.getInittenure()==3){
+	                	else if(){
 	                		
 	                		d2=LocalDateTime.now();
 	                		
